@@ -1,0 +1,16 @@
+.ContainerNavbar{
+    padding: 10px;
+    background-color: #592321;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.TextMain{
+    color : #FFFFFF;
+}
+
+.ContainerItemMenu{
+    display: flex;
+    gap: 5px;
+}

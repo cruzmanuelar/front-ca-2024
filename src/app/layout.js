@@ -3,6 +3,7 @@ import "./ui/globals.css";
 import Link from 'next/link'
 const inter = Inter({ subsets: ["latin"] });
 import { Providers } from "@/redux/providers";
+import { ToastContainer } from 'react-toastify';
 import StyledComponentsRegistry from "@/lib/AntdRegistry";
 export const metadata = {
   title: {
@@ -18,13 +19,8 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <StyledComponentsRegistry>
         <Providers>
-          <div>
-            {/* <nav>
-              <Link href='/login'>Ingresar</Link>
-              <Link href='/login'>Registrarse</Link>
-            </nav> */}
           {children}
-          </div>
+          <ToastContainer />
         </Providers>
         </StyledComponentsRegistry>
       </body>

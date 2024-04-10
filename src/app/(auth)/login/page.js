@@ -1,57 +1,70 @@
 "use client"
 import { useState } from 'react'
-import { Row, Col } from 'antd'
+import { Row, Col, Typography, Select, Input, Form, Button } from 'antd'
 import { useRouter } from 'next/navigation'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { useGetTournamentsQuery } from '@/redux/services/tournamentsApi'
-import { Select } from 'antd'
-import styles from "./../../ui/login.modules.css";
 import Image from 'next/image'
+import { validateLogin } from '@/app/lib/helpers'
+import { notifyAlert } from '@/app/lib/notifications'
+
+import './../../ui/login.modules.css'
 
 export default function Login(){
 
     const router = useRouter()
 
-    const selections = useAppSelector(state => state.tournamentsReducer.tournaments)
+    const { Title } = Typography;
     const dispatch = useAppDispatch()
-
     const [ tournament, setTournament] = useState(null)
-    const selectStyle = {
-        width : '300px !important'
+    const [ formLogin, setFormLogin] = useState({
+        tornid : null,
+        usuusuario : null,
+        usucontrasenia : null
+    })
+
+    const sendLogin = () => {
+        const { response, message } = validateLogin(formLogin)
+        if(!response){
+            notifyAlert(message)
+        }
     }
 
-    const ImageStyle = {
-        display: 'flex !important',
-        justifyContent: 'center !important',
-        flexDirection: 'column !important',
-        alignItems: 'center',
+    const onChangeInput = (e) => {
+        setFormLogin({
+            ...formLogin, [e.target.name] : e.target.value
+        })
     }
 
     const { data, error, isLoading, isFetching } = useGetTournamentsQuery()
 
-    console.log(data)
     if(isLoading || isFetching) return <>Cargando</>
     if(error) return <>Error</>
     const redirectRegister = (e) => {
         router.push('/register')
     }
 
-    const onChangeSelect = ({torimagen}) => {
+    const onChangeSelect = ({tornid, torimagen}) => {
         setTournament(torimagen)
+        setFormLogin({
+            ...formLogin, tornid: tornid
+        })
     };
 
     return <>
-        <Row >
-            <Col span={24}>
-
+        <Row className='Container-Login'>
+            <Col className='Card-Login'>
+                <Title level={3} className='Text-Main'>La quinela de la bondad</Title>
+                <div style={{display:'flex',justifyContent:'center', paddingBottom:'10px'}}>
+                    <Image
+                        width='230'
+                        height='240'
+                        priority
+                        src={tournament ? tournament : 'https://res.cloudinary.com/josecruz9/image/upload/v1712374907/tm3gidyzcpx3k2zlskev.png'}
+                        alt='Icono torneo'
+                    />
+                </div>
                 <div>
-                <Image
-                    width='230'
-                    height='240'
-                    priority
-                    src={tournament ? tournament : 'https://res.cloudinary.com/josecruz9/image/upload/v1712374907/tm3gidyzcpx3k2zlskev.png'}
-                    alt='Icono torneo'
-                />
                 <Select
                     placeholder='Seleccionar torneo'
                     options={data.data}
@@ -59,8 +72,19 @@ export default function Login(){
                 />
                 </div>
 
+                <div className='Container-Input'>
+                    <Input name='usuusuario' onChange={onChangeInput} placeholder="Usuario" />
+                    <Input.Password name='usucontrasena' onChange={onChangeInput} placeholder="Contrasena" />
+
+                    <Button onClick={sendLogin} type="primary" htmlType="submit" block>
+                        Ingresar
+                    </Button>
+                </div>
+                <div className='Container-Redirect-Login'>
+                    <span onClick={redirectRegister}>No tengo cuenta</span>
+                </div>
             </Col>
         </Row>
-            {/* <button onClick={redirectRegister}>Registrarse</button> */}
+        
     </>
 }
