@@ -7,6 +7,7 @@ import {
     TeamOutlined,
     HomeOutlined
 } from '@ant-design/icons';
+import { Affix, Tooltip } from 'antd';
 
 const Footer = () => {
 
@@ -16,7 +17,7 @@ const Footer = () => {
         backgroundColor : '#592321',
         position : 'absolute',
         bottom : '0',
-        width: '100%'
+        width: '100%',
     }
 
     const ContainerItem = {
@@ -29,25 +30,46 @@ const Footer = () => {
         borderRadius : '6px'
     }
 
-    return (
-        <nav style={ContainerItemMenu}>
-            <Link style={ContainerItem} href='/'><HomeOutlined style={{color :'#592321', fontSize:'18px'}}/></Link>
-            <Link style={ContainerItem} href='/'><OrderedListOutlined style={{color :'#592321', fontSize:'18px'}}/></Link>
-            <Link style={ContainerItem} href='/'><TeamOutlined style={{color :'#592321', fontSize:'18px'}}/></Link>
-            <Link style={ContainerItem} href='/'><CalendarOutlined style={{color :'#592321', fontSize:'18px'}}/></Link>
-            <Link style={ContainerItem} href='/'><BarChartOutlined style={{color :'#592321', fontSize:'18px'}}/></Link>
+    const styleIcons = {
+        color :'#592321',
+        fontSize:'18px'
+    }
 
-            {/* <Dropdown
-                menu={{
-                    items,
-                }}
-                trigger={['click']}
-                placement="bottomRight"
-                arrow
-                >
-                <Button><UserOutlined/></Button>
-            </Dropdown> */}
-        </nav>
+    return (
+        <Affix offsetBottom={0}>
+            <nav style={ContainerItemMenu}>
+                <Tooltip placement="top" title='Home'>
+                    <Link style={ContainerItem} href='/'>
+                            <HomeOutlined style={styleIcons}/>
+                    </Link>
+                </Tooltip>
+
+                
+                <Tooltip placement="top" title='Tabla selecciones'>
+                    <Link style={ContainerItem} href='/positions'>
+                        <OrderedListOutlined style={styleIcons}/>
+                    </Link>
+                </Tooltip>
+
+                <Tooltip placement="top" title='Tabla usuarios'>
+                    <Link style={ContainerItem} href='/users'>
+                        <TeamOutlined style={styleIcons}/>
+                    </Link>
+                </Tooltip>
+                <Tooltip placement="top" title='Calendario'>
+                    <Link style={ContainerItem} href='/matches'>
+                        <CalendarOutlined style={styleIcons}/>
+                    </Link>
+                </Tooltip>
+
+                <Tooltip placement="top" title='Estadisticas'>
+                    <Link style={ContainerItem} href='/statistics'>
+                            <BarChartOutlined style={styleIcons}/>
+                    </Link>
+                </Tooltip>
+
+            </nav>
+        </Affix>
     )
 }
 

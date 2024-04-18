@@ -11,7 +11,13 @@ body {
   overflow-x: hidden;
 }
 
+.ant-table-thead .ant-table-cell{
+  background-color: red !important;
+}
 
+.ant-table-row .ant-table-cell{
+  padding: 6px !important;
+}
 a {
   color: inherit;
   text-decoration: none;

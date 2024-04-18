@@ -33,7 +33,7 @@ export default function Home() {
 
 	return (
 		<div style={ContainerMain}>
-			<Navbar />
+			{/* <Navbar /> */}
 			<Row style={ContainerMatches}>
 				<Col style={ContainerMatch}>
 					<Title level={4} style={{textAlign:'center'}}>No se encontraron partidos para jornada anterior</Title>
@@ -41,7 +41,7 @@ export default function Home() {
 				</Col>
 				<Col style={ContainerMatch}>Fecha Actual</Col>
 			</Row>
-			<Footer />
+			{/* <Footer /> */}
 		</div>
 	);
 }

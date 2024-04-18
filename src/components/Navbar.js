@@ -1,6 +1,6 @@
 'use client'
 import styles from '@/app/ui/navbar.module.css'
-import { Button, Dropdown } from 'antd';
+import { Button, Dropdown, Affix } from 'antd';
 
 import {
 	UserOutlined,
@@ -9,9 +9,12 @@ import {
     SwapOutlined
 } from '@ant-design/icons';
 import Link from 'next/link'
+import ModalMenu from './ModalMenu';
+import { useState } from 'react';
 
 const Navbar = () => {
 
+    const [showModal, setShowModal] = useState(false)
     const items = [
         {
             key: '1',
@@ -40,19 +43,22 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className={styles.ContainerNavbar}>
-            <Link className={styles.TextMain} href='/'>La quinela</Link>
-            <Dropdown
-                menu={{
-                    items,
-                }}
-                trigger={['click']}
-                placement="bottomRight"
-                arrow
-                >
-                <Button><SettingOutlined style={{color :'#592321'}}/></Button>
-            </Dropdown>
-        </nav>
+        <>
+            <Affix offsetTop={0}>
+                <nav className={styles.ContainerNavbar}>
+                    <Link className={styles.TextMain} href='/'>La quinela</Link>
+                    <Button
+                        onClick={()=> setShowModal(true)}
+                    >
+                        <SettingOutlined style={{color :'#592321'}}/>
+                    </Button>
+                </nav>
+            </Affix>
+            <ModalMenu
+                showModal={showModal}
+                setShowModal={setShowModal}
+            />
+        </>
     )
 }
 
